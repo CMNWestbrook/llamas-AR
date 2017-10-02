@@ -1,0 +1,89 @@
+<!doctype html>
+<html>
+    <head>
+        <title>Llamas!!!</title>
+        <link rel="stylesheet" href="LLamas.css">
+        <link rel="icon" href="https://www.freefavicon.com/freefavicons/animal/llama-152-237385.png">
+
+    </head>
+
+    <body>
+        <div id="root"></div>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
+
+        <script type="text/babel">
+            class App extends React.Component {
+                constructor(props) {
+                    super(props);
+
+                    // console.log("Whattup");
+                    this.state = {
+                        numLlamas: 1
+                    }
+
+                    this.handleLlamaUpdate = this.handleLlamaUpdate.bind(this);
+                }
+                handleLlamaUpdate(numLlamas) {
+                    this.setState({
+                        numLlamas: numLlamas
+                    });
+                }
+                render() {
+                    return (
+                        <div>
+                            <Greeting club={"Llama Lovers"} />
+                            <LlamaCounter numLlamas={this.state.numLlamas} />
+                            <AddRemoveLlama
+                            numLlamas={this.state.numLlamas}
+                            onLlamaUpdate={this.handleLlamaUpdate} />
+                        </div>
+                        );
+                }
+            }
+            class AddRemoveLlama extends React.Component {
+                render() {
+                    const { onLlamaUpdate, numLlamas } = this.props;
+                    return (
+                        <div>
+                            <button onClick={() => onLlamaUpdate(numLlamas + 1)}>
+                                More Llamas
+                            </button>
+                            <button onClick={() => onLlamaUpdate(numLlamas - 1)}>
+                            Less Llamas
+                            </button>
+                        </div>
+                    )
+                }
+            }
+            const LlamaCounter = ({ numLlamas=0 }) => {
+                return (
+                    <h3>
+                    {numLlamas === 1 ? "There is just " : "There are "}
+                    {numLlamas}
+                    {numLlamas === 1 ? " magical Llama! It is lonely, give it friends." : " magical Llamas!"}
+                    </h3>
+                    )
+            }
+
+            const Greeting = (props) => {
+                const { club="Some Club Text" } = props;
+                return (
+                <h1>Hello {club}</h1>
+                );
+            }
+
+            ReactDOM.render(
+                <App club={"Second Club Text"} />,
+                document.getElementById("root")
+            );
+
+        </script>
+
+    <!--     <noscript>
+          JavaScript is required to run this app.
+        </noscript> -->
+
+    </body>
+</html>
