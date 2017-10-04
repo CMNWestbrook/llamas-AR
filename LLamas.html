@@ -8,6 +8,8 @@
     </head>
 
     <body>
+        <!-- trying to center with the basics -->
+    <center>
         <div id="root"></div>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react.min.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/react/15.6.1/react-dom.min.js"></script>
@@ -18,7 +20,6 @@
                 constructor(props) {
                     super(props);
 
-                    // console.log("Whattup");
                     this.state = {
                         numLlamas: 1
                     }
@@ -33,15 +34,23 @@
                 render() {
                     return (
                         <div>
-                            <Greeting club={"Llama Lovers"} />
+                            <Greeting group={"Llama Lovers"} />
                             <LlamaCounter numLlamas={this.state.numLlamas} />
+
+                            <LlamaLink numLlamas={this.state.numLlamas} />
+
                             <AddRemoveLlama
                             numLlamas={this.state.numLlamas}
                             onLlamaUpdate={this.handleLlamaUpdate} />
+
+                            <PoeticLlama numLlamas={this.state.numLlamas} />
+                            <div>"No Llamas were harmed in the creation of this page."</div>
+
                         </div>
                         );
                 }
             }
+
             class AddRemoveLlama extends React.Component {
                 render() {
                     const { onLlamaUpdate, numLlamas } = this.props;
@@ -57,25 +66,78 @@
                     )
                 }
             }
-            const LlamaCounter = ({ numLlamas=0 }) => {
+
+            const LlamaCounter = ({ numLlamas=1 }) => {
                 return (
                     <h3>
                     {numLlamas === 1 ? "There is just " : "There are "}
                     {numLlamas}
                     {numLlamas === 1 ? " magical Llama! It is lonely, give it friends." : " magical Llamas!"}
                     </h3>
-                    )
+                    );
             }
 
+            const MarkerPict = (<img src="http://cwestbrook.com/static/images/llama-marker.png" width="70%" height="70%" />);
+
             const Greeting = (props) => {
-                const { club="Some Club Text" } = props;
+                const { group="Some Club Text" } = props;
                 return (
-                <h1>Hello {club}</h1>
+                <h1>Hello {group}</h1>
                 );
             }
 
+            const LlamaLink = ({ numLlamas=1 }) => {
+                var linkContent;
+                if ( numLlamas === numLlamas ) {
+                    linkContent = <div>Go to this site "https://www.cwestbrook.com/llama/{numLlamas}" and point your device camera at the Llama Landing square below.<br /> Therein lies your SUPER DUPER MAGICAL AR Llama(s).</div>
+                } else {
+                    linkContent = "No Llamas for you. Sorry for the disappointment. Come again. May the Llamaness be with you."
+                } 
+
+                return (
+                <h3>
+                {linkContent}
+                </h3>
+                );
+            }
+
+            
+            const PoeticLlama = ({ numLlamas=1 }) => {
+                var line1 = (<span><i>Ode to Lovely Llamas</i><br />One Llama.</span>);
+                var line2 = (<span><br />Two Llama.</span>);
+                var line3 = (<span><br />Three Llama.</span>);
+                var line4 = (<span><br />Four.<br />O how thou hast stolen my heart.</span>);
+                var line5 = (<span><br />Five.<br />I shall now start a Llama commune.</span>);
+
+                var poemLines;
+                if ( numLlamas === 1 ) {
+                    poemLines=<table><tr><td>{MarkerPict}</td>
+                    <td>{line1}</td></tr></table>
+                } else if ( numLlamas ===2 ){
+                    poemLines=<table><tr><td>{MarkerPict}</td>
+                    <td>{line1}{line2}</td></tr></table>
+                } else if ( numLlamas === 3 ){
+                    poemLines=<table><tr><td>{MarkerPict}</td>
+                    <td>{line1}{line2}{line3}</td></tr></table>
+                } else if ( numLlamas === 4 ){
+                    poemLines=<table><tr><td>{MarkerPict}</td>
+                    <td>{line1}{line2}{line3}{line4}</td></tr></table>
+                } else if ( numLlamas === 5 ){
+                    poemLines=<table><tr><td>{MarkerPict}</td>
+                    <td>{line1}{line2}{line3}{line4}{line5}</td></tr></table>
+                } 
+                else { poemLines = "No Llamas. They all moved to Sweden."}
+
+                return (
+                <div>
+                {poemLines}
+                </div>
+                );
+            }
+
+
             ReactDOM.render(
-                <App club={"Second Club Text"} />,
+                <App />,
                 document.getElementById("root")
             );
 
@@ -84,6 +146,6 @@
     <!--     <noscript>
           JavaScript is required to run this app.
         </noscript> -->
-
+    </center>
     </body>
 </html>
