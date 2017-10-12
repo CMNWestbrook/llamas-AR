@@ -16,132 +16,130 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.23/browser.min.js"></script>
 
         <script type="text/babel">
-            class App extends React.Component {
-                constructor(props) {
-                    super(props);
+class App extends React.Component {
+    constructor(props) {
+    super(props);
 
-                    this.state = {
-                        numLlamas: 1
-                    }
+    this.state = {
+        numLlamas: 1
+    }
 
-                    this.handleLlamaUpdate = this.handleLlamaUpdate.bind(this);
-                }
-                handleLlamaUpdate(numLlamas) {
-                    this.setState({
-                        numLlamas: numLlamas
-                    });
-                }
-                render() {
-                    return (
-                        <div>
-                            <Greeting group={"Llama Lovers"} />
-                            <LlamaCounter numLlamas={this.state.numLlamas} />
+    this.handleLlamaUpdate = this.handleLlamaUpdate.bind(this);
+}
+handleLlamaUpdate(numLlamas) {
+    this.setState({
+        numLlamas: numLlamas
+    });
+}
+render() {
+    return (
+        <div>
+            <Greeting group={"Llama Lovers"} />
+            <LlamaCounter numLlamas={this.state.numLlamas} />
 
-                            <LlamaLink numLlamas={this.state.numLlamas} />
+            <LlamaLink numLlamas={this.state.numLlamas} />
 
-                            <AddRemoveLlama
-                            numLlamas={this.state.numLlamas}
-                            onLlamaUpdate={this.handleLlamaUpdate} />
+            <AddRemoveLlama
+            numLlamas={this.state.numLlamas}
+            onLlamaUpdate={this.handleLlamaUpdate} />
 
-                            <PoeticLlama numLlamas={this.state.numLlamas} />
-                            <div>"No Llamas were harmed in the creation of this page."</div>
+            <PoeticLlama numLlamas={this.state.numLlamas} />
+            <div>No Llamas were harmed in the creation of this page.</div>
+        </div>
+        );
+}
+}
 
-                        </div>
-                        );
-                }
-            }
+class AddRemoveLlama extends React.Component {
+render() {
+    const { onLlamaUpdate, numLlamas } = this.props;
+    return (
+        <div>
+            <button onClick={() => onLlamaUpdate(numLlamas + 1)}>
+                More Llamas
+            </button>
+            <button onClick={() => onLlamaUpdate(numLlamas - 1)}>
+            Less Llamas
+            </button>
+        </div>
+    )
+}
+}
 
-            class AddRemoveLlama extends React.Component {
-                render() {
-                    const { onLlamaUpdate, numLlamas } = this.props;
-                    return (
-                        <div>
-                            <button onClick={() => onLlamaUpdate(numLlamas + 1)}>
-                                More Llamas
-                            </button>
-                            <button onClick={() => onLlamaUpdate(numLlamas - 1)}>
-                            Less Llamas
-                            </button>
-                        </div>
-                    )
-                }
-            }
+const LlamaCounter = ({ numLlamas=1 }) => {
+return (
+    <h3>
+    {numLlamas === 1 ? "There is just " : "There are "}
+    {numLlamas}
+    {numLlamas === 1 ? " magical Llama! It is lonely, give it friends." : " magical Llamas!"}
+    </h3>
+    );
+}
 
-            const LlamaCounter = ({ numLlamas=1 }) => {
-                return (
-                    <h3>
-                    {numLlamas === 1 ? "There is just " : "There are "}
-                    {numLlamas}
-                    {numLlamas === 1 ? " magical Llama! It is lonely, give it friends." : " magical Llamas!"}
-                    </h3>
-                    );
-            }
+const MarkerPict = (<img src="http://cwestbrook.com/static/images/llama-marker.png" width="70%" height="70%" />);
 
-            const MarkerPict = (<img src="http://cwestbrook.com/static/images/llama-marker.png" width="70%" height="70%" />);
+const Greeting = (props) => {
+const { group="Some Club Text" } = props;
+return (
+<h1>Hello {group}</h1>
+);
+}
 
-            const Greeting = (props) => {
-                const { group="Some Club Text" } = props;
-                return (
-                <h1>Hello {group}</h1>
-                );
-            }
+const LlamaLink = ({ numLlamas=1 }) => {
+var linkContent;
+if ( numLlamas === numLlamas ) {
+    linkContent = <div>Go to this site https://cwestbrook.com/ar-llama/{numLlamas}.html and point your device camera at the Llama Landing square below.<br /> Therein lies your SUPER DUPER MAGICAL AR Llama(s). (tested on PC, Mac, Firefox for Android, and iOS 11 with Safari). <br /> Currently we only have three Llamas in virtual stock, check back later for more.</div>
+} else {
+    linkContent = "No Llamas for you. Sorry for the disappointment. Come again. May the Llamaness be with you."
+} 
 
-            const LlamaLink = ({ numLlamas=1 }) => {
-                var linkContent;
-                if ( numLlamas === numLlamas ) {
-                    linkContent = <div>Go to this site "https://www.cwestbrook.com/llama/{numLlamas}" and point your device camera at the Llama Landing square below.<br /> Therein lies your SUPER DUPER MAGICAL AR Llama(s).</div>
-                } else {
-                    linkContent = "No Llamas for you. Sorry for the disappointment. Come again. May the Llamaness be with you."
-                } 
-
-                return (
-                <h3>
-                {linkContent}
-                </h3>
-                );
-            }
-
-            
-            const PoeticLlama = ({ numLlamas=1 }) => {
-                var line1 = (<span><i>Ode to Lovely Llamas</i><br />One Llama.</span>);
-                var line2 = (<span><br />Two Llama.</span>);
-                var line3 = (<span><br />Three Llama.</span>);
-                var line4 = (<span><br />Four.<br />O how thou hast stolen my heart.</span>);
-                var line5 = (<span><br />Five.<br />I shall now start a Llama commune.</span>);
-
-                var poemLines;
-                if ( numLlamas === 1 ) {
-                    poemLines=<table><tr><td>{MarkerPict}</td>
-                    <td>{line1}</td></tr></table>
-                } else if ( numLlamas ===2 ){
-                    poemLines=<table><tr><td>{MarkerPict}</td>
-                    <td>{line1}{line2}</td></tr></table>
-                } else if ( numLlamas === 3 ){
-                    poemLines=<table><tr><td>{MarkerPict}</td>
-                    <td>{line1}{line2}{line3}</td></tr></table>
-                } else if ( numLlamas === 4 ){
-                    poemLines=<table><tr><td>{MarkerPict}</td>
-                    <td>{line1}{line2}{line3}{line4}</td></tr></table>
-                } else if ( numLlamas === 5 ){
-                    poemLines=<table><tr><td>{MarkerPict}</td>
-                    <td>{line1}{line2}{line3}{line4}{line5}</td></tr></table>
-                } 
-                else { poemLines = "No Llamas. They all moved to Sweden."}
-
-                return (
-                <div>
-                {poemLines}
-                </div>
-                );
-            }
+return (
+<h3>
+{linkContent}
+</h3>
+);
+}
 
 
-            ReactDOM.render(
-                <App />,
-                document.getElementById("root")
-            );
+const PoeticLlama = ({ numLlamas=1 }) => {
+var line1 = (<span><h3><i>Ode to Lovely Llamas</i></h3><br />One Llama.</span>);
+var line2 = (<span><br />Two Llama.</span>);
+var line3 = (<span><br />Three Llama.</span>);
+var line4 = (<span><br />Four.<br />O how thou hast stolen my heart.</span>);
+var line5 = (<span><br />Five.<br />I shall now start a Llama commune.</span>);
 
-        </script>
+var poemLines;
+if ( numLlamas === 1 ) {
+    poemLines=<table><tr><td>{MarkerPict}</td>
+    <td>{line1}</td></tr></table>
+} else if ( numLlamas ===2 ){
+    poemLines=<table><tr><td>{MarkerPict}</td>
+    <td>{line1}{line2}</td></tr></table>
+} else if ( numLlamas === 3 ){
+    poemLines=<table><tr><td>{MarkerPict}</td>
+    <td>{line1}{line2}{line3}</td></tr></table>
+} else if ( numLlamas === 4 ){
+    poemLines=<table><tr><td>{MarkerPict}</td>
+    <td>{line1}{line2}{line3}{line4}</td></tr></table>
+} else if ( numLlamas === 5 ){
+    poemLines=<table><tr><td>{MarkerPict}</td>
+    <td>{line1}{line2}{line3}{line4}{line5}</td></tr></table>
+} 
+else { poemLines = "No Llamas. They all moved to Sweden."}
+
+return (
+<div>
+{poemLines}
+</div>
+);
+}
+
+
+ReactDOM.render(
+<App />,
+document.getElementById("root")
+);
+</script>
 
     <!--     <noscript>
           JavaScript is required to run this app.
